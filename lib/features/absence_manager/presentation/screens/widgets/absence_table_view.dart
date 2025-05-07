@@ -45,14 +45,9 @@ class AbsenceTableView extends StatelessWidget {
                   absencesDetailList.mapIndexed((index, a) {
                     final absence = a.absence;
                     final member = a.member;
-                    final status =
-                        absence.confirmedAt != null
-                            ? 'Confirmed'
-                            : absence.rejectedAt != null
-                            ? 'Rejected'
-                            : 'Requested';
 
-                    final statusColor = switch (status) {
+
+                    final statusColor = switch (absence.status) {
                       'Confirmed' => Colors.green,
                       'Rejected' => Colors.red,
                       _ => Colors.orange,
@@ -123,7 +118,7 @@ class AbsenceTableView extends StatelessWidget {
                         ),
                         DataCell(
                           Chip(
-                            label: Text(status),
+                            label: Text(absence.status),
                             backgroundColor: statusColor.withValues(alpha: 0.1),
                             labelStyle: TextStyle(color: statusColor),
                             visualDensity: VisualDensity.compact,
