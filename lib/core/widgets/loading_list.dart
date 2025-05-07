@@ -1,39 +1,45 @@
+import 'package:crewmeister/config/theme/theme_mode_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'shimmer.dart';
 
-class Loadinglist extends StatelessWidget {
+class Loadinglist extends ConsumerWidget {
   final int itemCount;
   const Loadinglist({super.key, this.itemCount = 5});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ThemeMode theme = ref.watch(themeModeProvider);
+
     return Shimmer(
-      child: ListView(
+      linearGradient:
+          theme == ThemeMode.light ? shimmerGradient : shimmerGradientDark,
+      child: ListView.separated(
+        separatorBuilder: (context, index) => const SizedBox(height: 16),
+        itemCount: itemCount,
+        shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        children: [
-          for (int i = 0; i < itemCount; i++)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ShimmerLoading(
-                isLoading: true,
-                child: Container(
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 4,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
-                  ),
+        itemBuilder:
+            (context, index) => ShimmerLoading(
+              child: Container(
+                height: 100,
+                decoration: BoxDecoration(
+                  color:
+                      theme == ThemeMode.light
+                          ? Colors.white
+                          : Colors.grey[800],
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 4,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
                 ),
               ),
             ),
-        ],
       ),
     );
   }

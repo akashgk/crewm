@@ -1,5 +1,5 @@
-import 'package:crewmeister/core/theme/theme_mode_provider.dart';
-import 'package:crewmeister/hw_mp.dart';
+import 'package:crewmeister/config/theme/theme_mode_provider.dart';
+import 'package:crewmeister/services/path_strategy/path_strategy_mp.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

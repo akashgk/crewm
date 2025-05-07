@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 enum AbsenceType {
   sickness('assets/icons/sick.png', 'Sickness'),
   vacation('assets/icons/vacation.png', 'Vacation');
@@ -36,4 +38,18 @@ class Absence {
     required this.type,
     required this.userId,
   });
+
+  String get status =>
+      confirmedAt != null
+          ? 'Confirmed'
+          : rejectedAt != null
+          ? 'Rejected'
+          : 'Requested';
+
+  String get formatPeriod {
+    final format = DateFormat('d MMM yyyy');
+    final start = startDate != null ? format.format(startDate!) : 'N/A';
+    final end = endDate != null ? format.format(endDate!) : 'N/A';
+    return '$start → $end';
+  }
 }

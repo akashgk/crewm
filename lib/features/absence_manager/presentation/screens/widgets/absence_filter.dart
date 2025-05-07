@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../domain/entities/absence.dart';
 
-
 class AbsenceFilter extends StatelessWidget {
   final AbsenceType? selectedType;
   final void Function(AbsenceType?) onChanged;

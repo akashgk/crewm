@@ -16,6 +16,4 @@ abstract class AbsenceRepository {
     DateTime? startDate,
     DateTime? endDate,
   });
-
-  Future<String> generateICal(); // Optional bonus
 }

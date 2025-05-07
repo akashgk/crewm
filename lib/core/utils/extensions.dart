@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/foundation.dart';
 
 import 'validators.dart';
@@ -14,8 +12,7 @@ extension MapExtensions on Map<String, dynamic> {
 
     if (value is! T) {
       if (kDebugMode) {
-
-      throw Exception('Invalid type for key "$key"');
+        throw Exception('Invalid type for key "$key"');
       }
       return null;
     }
@@ -29,7 +26,6 @@ extension MapExtensions on Map<String, dynamic> {
     return value;
   }
 }
-
 
 extension IndexedMap<E> on Iterable<E> {
   Iterable<T> mapIndexed<T>(T Function(int index, E item) f) {

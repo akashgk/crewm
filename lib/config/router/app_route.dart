@@ -1,4 +1,4 @@
-import 'package:crewmeister/core/theme/theme_mode_provider.dart';
+import 'package:crewmeister/config/theme/theme_mode_provider.dart';
 import 'package:crewmeister/core/widgets/custom_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +38,7 @@ class AppRoute extends GoRoute {
                  ),
                ],
              ),
-             body: builder(context, state),
+             body: SafeArea(child: builder(context, state)),
              resizeToAvoidBottomInset: false,
            );
            if (useFade) {

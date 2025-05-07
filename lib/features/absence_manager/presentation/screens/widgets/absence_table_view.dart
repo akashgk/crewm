@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-import '../../providers/absence_with_member_provider.dart';
+import '../../../domain/entities/absence_with_member.dart';
 
 class AbsenceTableView extends StatelessWidget {
   final List<AbsenceWithMember> absencesDetailList;

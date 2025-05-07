@@ -8,6 +8,14 @@ const shimmerGradient = LinearGradient(
   tileMode: TileMode.clamp,
 );
 
+const shimmerGradientDark = LinearGradient(
+  colors: [Color(0xFF2A2A2E), Color(0xFF3A3A3F), Color(0xFF2A2A2E)],
+  stops: [0.1, 0.3, 0.4],
+  begin: Alignment(-1.0, -0.3),
+  end: Alignment(1.0, 0.3),
+  tileMode: TileMode.clamp,
+);
+
 class Shimmer extends StatefulWidget {
   static ShimmerState? of(BuildContext context) {
     return context.findAncestorStateOfType<ShimmerState>();
@@ -82,11 +90,7 @@ class _SlidingGradientTransform extends GradientTransform {
 }
 
 class ShimmerLoading extends StatefulWidget {
-  const ShimmerLoading({
-    super.key,
-    this.isLoading = true,
-    required this.child,
-  });
+  const ShimmerLoading({super.key, this.isLoading = true, required this.child});
 
   final bool isLoading;
   final Widget child;
@@ -159,4 +163,3 @@ class _ShimmerLoadingState extends State<ShimmerLoading> {
     );
   }
 }
-

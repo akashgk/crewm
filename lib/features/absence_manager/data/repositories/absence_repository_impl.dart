@@ -1,19 +1,20 @@
-import 'package:crewmeister/core/utils/json_reader.dart';
 import 'package:crewmeister/features/absence_manager/data/models/absence_model.dart';
 import 'package:crewmeister/features/absence_manager/domain/entities/absence.dart';
 import 'package:crewmeister/features/absence_manager/domain/repositories/absence_repository.dart';
+import 'package:crewmeister/services/file_service.dart';
 
 class AbsenceRepositoryImpl implements AbsenceRepository {
   final String absenceSource;
+  final FileService fileService;
 
-  AbsenceRepositoryImpl({required this.absenceSource});
+  AbsenceRepositoryImpl(this.fileService, {required this.absenceSource});
 
   List<Absence> _cachedAbsences = [];
 
   Future<void> _loadData() async {
     if (_cachedAbsences.isNotEmpty) return;
 
-    final absenceListJson = await readJsonFile(absenceSource);
+    final absenceListJson = await fileService.readJsonFile(absenceSource);
 
     _cachedAbsences =
         absenceListJson
@@ -69,11 +70,5 @@ class AbsenceRepositoryImpl implements AbsenceRepository {
       endDate: endDate,
     );
     return all.length;
-  }
-
-  @override
-  Future<String> generateICal() async {
-    // Placeholder
-    return 'BEGIN:VCALENDAR\n...';
   }
 }

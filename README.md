@@ -1,16 +1,81 @@
-# crewmeister
+# Crewmeister Absence Manager
 
-A new Flutter project.
+A Flutter web and mobile application for managing employee absences, built using Clean Architecture and Riverpod.
 
-## Getting Started
+## 🛠 Features
 
-This project is a starting point for a Flutter application.
+- Filterable and paginated list of absences
+- View detailed absence information
+- Export absences to `.ics` calendar format
+- Caching and local data management
+- Light And Dark Mode
+- Web and Mobile Supoprt
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🚀 Getting Started
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 1. Clone the Repository
+
+```bash
+clone the repo
+change into the repo
+```
+
+### 2. Install Flutter Dependencies
+Make sure you have Flutter installed. Then run:
+
+```bash
+flutter pub get
+```
+
+### 3. Run the Project
+
+#### Web:
+
+```bash
+flutter run -d chrome
+```
+
+#### Mobile:
+
+Connect your emulator or device and run:
+
+```bash
+flutter run
+```
+
+---
+
+## 🧪 Running Tests
+
+To run all unit and widget tests:
+
+```bash
+flutter test
+```
+
+---
+
+## 📂 Project Structure
+
+```
+lib/
+├── core/                  # Shared utilities and constants
+├── features/absence_manager/
+│   ├── data/              # Models and repositories
+│   ├── domain/            # Entities and abstract repositories
+│   ├── presentation/      # UI and view logic
+├── services/              # File + calendar services
+```
+
+---
+
+## 📦 Tech Stack
+
+- Flutter (Web & Mobile)
+- Riverpod for state management
+- Clean Architecture
+- Path Provider & Intl packages
+
+---

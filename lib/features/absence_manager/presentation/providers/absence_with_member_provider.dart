@@ -1,16 +1,9 @@
 import 'package:crewmeister/features/absence_manager/presentation/providers/absence_repository_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/absence.dart';
-import '../../domain/entities/member.dart';
+import '../../domain/entities/absence_with_member.dart';
 import 'absence_detail_provider.dart';
 import 'member_repository_provider.dart';
-
-class AbsenceWithMember {
-  final Absence absence;
-  final Member? member;
-
-  AbsenceWithMember({required this.absence, required this.member});
-}
 
 class AbsenceListParams {
   final int offset;
@@ -47,7 +40,7 @@ final absenceWithMemberListProvider = FutureProvider.autoDispose
     ) async {
       final absenceRepo = ref.read(absenceRepositoryProvider);
       final memberRepo = ref.read(memberRepositoryProvider);
-      await Future.delayed(const Duration(seconds: 1)); 
+      await Future.delayed(const Duration(seconds: 1));
       final absences = await absenceRepo.getAbsences(
         offset: absenceParams.offset,
         limit: absenceParams.limit,
@@ -66,19 +59,16 @@ final absenceWithMemberListProvider = FutureProvider.autoDispose
       return result;
     });
 
+final absenceDetailWithMemberProvider = FutureProvider.family
+    .autoDispose<AbsenceWithMember, int>((ref, id) async {
+      final absence = await ref.watch(absenceDetailProvider(id).future);
 
+      if (absence == null) {
+        throw Exception('Absence not found');
+      }
 
+      final memberRepo = ref.read(memberRepositoryProvider);
+      final member = await memberRepo.getMemberById(absence.userId);
 
-final absenceDetailWithMemberProvider =
-    FutureProvider.family.autoDispose<AbsenceWithMember, int>((ref, id) async {
-  final absence = await ref.watch(absenceDetailProvider(id).future);
-
-  if (absence == null) {
-    throw Exception('Absence not found');
-  }
-
-  final memberRepo = ref.read(memberRepositoryProvider);
-  final member = await memberRepo.getMemberById(absence.userId);
-
-  return AbsenceWithMember(absence: absence, member: member);
-});
+      return AbsenceWithMember(absence: absence, member: member);
+    });

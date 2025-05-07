@@ -8,9 +8,9 @@ class ErrorState extends StatelessWidget {
 
   const ErrorState({
     super.key,
-    this.title = 'Something went wrong',
-    this.message = 'We couldn’t load the data. Please try again.',
-    this.icon = Icons.error_outline,
+    this.title = 'Oops!',
+    this.message = 'Something went wrong while loading.\nPlease try again.',
+    this.icon = Icons.sentiment_dissatisfied_outlined,
     this.onRetry,
   });
 
@@ -20,38 +20,47 @@ class ErrorState extends StatelessWidget {
 
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              icon,
-              size: 64,
-              color: theme.colorScheme.error.withValues(alpha: 0.3),
+            CircleAvatar(
+              radius: 40,
+              backgroundColor: theme.colorScheme.error.withValues(alpha: .1),
+              child: Icon(icon, size: 40, color: theme.colorScheme.error),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 24),
             Text(
               title,
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+              style: theme.textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.w600,
                 color: theme.colorScheme.error,
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 12),
             Text(
               message,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: theme.colorScheme.onSurface.withValues(alpha: .7),
               ),
               textAlign: TextAlign.center,
             ),
             if (onRetry != null) ...[
-              const SizedBox(height: 20),
-              ElevatedButton.icon(
+              const SizedBox(height: 28),
+              FilledButton.icon(
                 onPressed: onRetry,
-                icon: const Icon(Icons.refresh),
+                icon: const Icon(Icons.refresh_rounded),
                 label: const Text('Try Again'),
+                style: FilledButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 14,
+                  ),
+                  textStyle: theme.textTheme.labelLarge?.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
             ],
           ],

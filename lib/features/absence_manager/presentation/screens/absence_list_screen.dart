@@ -11,6 +11,8 @@ import '../providers/absence_count_provider.dart';
 import '../providers/absence_with_member_provider.dart';
 import 'widgets/absence_filter.dart';
 import 'widgets/absence_list_mobile.dart';
+import 'widgets/date_range_selector.dart';
+import 'widgets/pagination_block.dart';
 
 class AbsenceListScreen extends ConsumerWidget {
   const AbsenceListScreen({super.key});
@@ -44,6 +46,7 @@ class AbsenceListScreen extends ConsumerWidget {
 
     return Column(
       children: [
+        const SizedBox(height: 16),
         totalCountAsync.when(
           loading: () => const Text('Loading count...'),
           error: (e, _) => const Text('Error loading count'),
@@ -51,7 +54,6 @@ class AbsenceListScreen extends ConsumerWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-
           child: Row(
             children: [
               AbsenceFilter(
@@ -62,28 +64,18 @@ class AbsenceListScreen extends ConsumerWidget {
                 },
               ),
               const Spacer(),
-              ElevatedButton(
-                onPressed: () async {
-                  final picked = await showDateRangePicker(
-                    context: context,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime.now().add(const Duration(days: 365)),
-                    initialDateRange: dateRange,
-                  );
-                  if (picked != null) {
-                    ref.read(selectedDateRangeProvider.notifier).state = picked;
-                    ref.read(currentPageProvider.notifier).state = 0;
-                  }
-                },
-                child: const Text('Select Date Range'),
-              ),
+              const DateRangeSelector(),
             ],
           ),
         ),
 
         Expanded(
           child: absencesAsync.when(
-            loading: () => const Loadinglist(),
+            loading:
+                () => const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Loadinglist(),
+                ),
             error: (e, _) => ErrorState(message: e.toString()),
             data: (absencesDetailsList) {
               if (absencesDetailsList.isEmpty) {
@@ -92,37 +84,29 @@ class AbsenceListScreen extends ConsumerWidget {
               return ResponsiveLayout(
                 mobile: AbsenceListMobile(
                   absencesDetailList: absencesDetailsList,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                 ),
                 desktop: AbsenceTableView(
                   absencesDetailList: absencesDetailsList,
                 ),
                 tablet: AbsenceListMobile(
                   absencesDetailList: absencesDetailsList,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 8,
+                  ),
                 ),
               );
             },
           ),
         ),
 
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                onPressed:
-                    page > 0
-                        ? () => ref.read(currentPageProvider.notifier).state--
-                        : null,
-                icon: const Icon(Icons.chevron_left),
-              ),
-              Text('Page ${page + 1}'),
-              IconButton(
-                onPressed: () => ref.read(currentPageProvider.notifier).state++,
-                icon: const Icon(Icons.chevron_right),
-              ),
-            ],
-          ),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: PaginationControls(),
         ),
       ],
     );
